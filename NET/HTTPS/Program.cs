@@ -22,7 +22,7 @@ app.Use(async (context, next) =>
 {
     Console.WriteLine($"request-  request url : {context.Response.HttpContext.Request.GetDisplayUrl()}");
     await next.Invoke();
-    Console.WriteLine($"response- response url : {context.Response.HttpContext.Request.GetDisplayUrl()} | status code {context.Response.StatusCode}");
+    Console.WriteLine($"response- response location : {context.Response.Headers.Location} | status code {context.Response.StatusCode}");
 });
 
 app.UseHttpsRedirection();
