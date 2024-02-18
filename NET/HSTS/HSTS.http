@@ -1,0 +1,6 @@
+@HSTS_HostAddress = http://localhost:5192
+
+GET {{HSTS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
