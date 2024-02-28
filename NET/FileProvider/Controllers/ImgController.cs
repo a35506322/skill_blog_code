@@ -18,7 +18,7 @@ public class ImgController : ControllerBase
     public ActionResult GetQunImagesFileInfo([FromRoute] string fileName)
     {
         var fileInfo = _fileProvider.GetFileInfo(fileName);
-        var jsonResult = new FileInfoResponse(fileInfo.Exists, fileInfo.Length,fileInfo.PhysicalPath,fileInfo.Name,fileInfo.LastModified,fileInfo.IsDirectory).ToString();
+        var jsonResult = new FileInfoResponse(fileInfo.Exists, fileInfo.Length, fileInfo.PhysicalPath, fileInfo.Name, fileInfo.LastModified, fileInfo.IsDirectory).ToString();
 
         if (fileInfo is { Exists: true })
             return Ok(jsonResult);
@@ -31,21 +31,9 @@ public class ImgController : ControllerBase
     {
         var fileInfo = _fileProvider.GetFileInfo(fileName);
 
-        if (fileInfo is { Exists: true }) 
-            return PhysicalFile(_fileProvider.GetFileInfo(fileName).PhysicalPath, MediaTypeNames.Image.Jpeg);
-            // return File(fileInfo.CreateReadStream(), MediaTypeNames.Image.Jpeg);
-        else
-            return NotFound($"{fileName} is not found");
-    }
-
-
-    [HttpGet("{fileName}")]
-    public ActionResult DownloadQunImage([FromRoute] string fileName)
-    {
-        var fileInfo = _fileProvider.GetFileInfo(fileName);
-
         if (fileInfo is { Exists: true })
-            return File(fileInfo.CreateReadStream(), MediaTypeNames.Image.Jpeg, fileInfo.Name);
+            return PhysicalFile(fileInfo.PhysicalPath, MediaTypeNames.Image.Jpeg, fileInfo.Name);
+        // return File(fileInfo.CreateReadStream(), MediaTypeNames.Image.Jpeg, fileInfo.Name);
         else
             return NotFound($"{fileName} is not found");
     }
