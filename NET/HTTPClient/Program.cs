@@ -1,6 +1,8 @@
+using HTTPClient.Entites;
 using HTTPClient.Infrastructures;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,8 @@ builder.Services.TryAddScoped<HttpClientLoggingHandler>();
 builder.Services.AddHttpClient<YouBikeHttpClientHandler>()
     .RemoveAllLoggers()
     .ConfigurePrimaryHttpMessageHandler<HttpClientLoggingHandler>();
+
+builder.Services.AddDbContext<TodoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Todo")));
 
 var app = builder.Build();
 
