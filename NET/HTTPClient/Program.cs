@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.TryAddScoped<HttpClientLoggingHandler>();
 builder.Services.AddHttpClient<YouBikeHttpClientHandler>()
     .RemoveAllLoggers()
