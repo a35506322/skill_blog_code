@@ -10,9 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.TryAddScoped<HttpClientAbstractHandler>();
-builder.Services.AddHttpClient("youbike").ConfigurePrimaryHttpMessageHandler<HttpClientAbstractHandler>();
-builder.Services.AddScoped<YouBikeHttpClientHandler>();
+builder.Services.TryAddScoped<HttpClientLoggingHandler>();
+builder.Services.AddHttpClient<YouBikeHttpClientHandler>()
+    .RemoveAllLoggers()
+    .ConfigurePrimaryHttpMessageHandler<HttpClientLoggingHandler>();
 
 var app = builder.Build();
 

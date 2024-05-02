@@ -1,15 +1,15 @@
 ﻿namespace HTTPClient.Infrastructures;
 
-public class HttpClientAbstractHandler : DelegatingHandler
+public class HttpClientLoggingHandler : DelegatingHandler
 {
-    private ILogger<HttpClientAbstractHandler> _logger;
+    private ILogger<HttpClientLoggingHandler> _logger;
 
-    public HttpClientAbstractHandler(ILogger<HttpClientAbstractHandler> logger) : base(new HttpClientHandler())
+    public HttpClientLoggingHandler(ILogger<HttpClientLoggingHandler> logger) : base(new HttpClientHandler())
     {
         this._logger = logger;
     }
 
-    public HttpClientAbstractHandler(HttpMessageHandler handler, ILogger<HttpClientAbstractHandler> logger) : base(handler)
+    public HttpClientLoggingHandler(HttpMessageHandler handler, ILogger<HttpClientLoggingHandler> logger) : base(handler)
     {
         this._logger = logger;
     }
@@ -55,7 +55,7 @@ public class HttpClientAbstractHandler : DelegatingHandler
         }
 
         string jsonText = await response.Content.ReadAsStringAsync();
-        _logger.LogInformation("Response Body:\n{0}", jsonText);
+        _logger.LogInformation("Response Body:\n{0}", jsonText.Substring(0, 100));
 
         return response;
     }

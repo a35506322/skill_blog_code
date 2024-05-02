@@ -62,9 +62,9 @@ public class YouBikeHttpClientHandler
 {
     private readonly HttpClient _httpClient;
 
-    public YouBikeHttpClientHandler(IHttpClientFactory hf)
+    public YouBikeHttpClientHandler(HttpClient httpClient)
     {
-        _httpClient = hf.CreateClient("youbike");
+        _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri("https://tcgbusfs.blob.core.windows.net/");
     }
 
