@@ -1,5 +1,3 @@
-using DynamicAuth.Infrastructures.JWT;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var config = builder.Configuration;
@@ -9,13 +7,16 @@ var config = builder.Configuration;
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.SwaggerGenInit();
 
 // EF
 builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(config.GetConnectionString("Auth")));
 
 // JWT
 builder.Services.AddJwtAuthentication(config);
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -27,8 +28,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.UseAuthentication();
 app.UseAuthorization();
