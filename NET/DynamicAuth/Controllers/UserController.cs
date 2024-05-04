@@ -1,13 +1,18 @@
-﻿namespace DynamicAuth.Controllers;
+﻿using DynamicAuth.Infrastructures.JWT;
+
+namespace DynamicAuth.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class UserController : ControllerBase
 {
     private AuthContext _authContext;
-    public UserController(AuthContext authContext)
+    private JWTHelper _jwtHelper;
+
+    public UserController(AuthContext authContext, JWTHelper jwtHelper)
     {
         _authContext = authContext;
+        _jwtHelper = jwtHelper;
     }
 
     [HttpPost]
@@ -18,7 +23,10 @@ public class UserController : ControllerBase
         if (user is null)
             return TypedResults.Ok(ResultResponseFactory.LoginFail());
 
-        return TypedResults.Ok(ResultResponseFactory.LoginSuccess("123"));
+        var userRoles = await _authContext.User_Role.Where(x => x.UserId == user.UserId).ToListAsync();
+        string token = _jwtHelper.GenerateToken(user.UserId, userRoles);
+
+        return TypedResults.Ok(ResultResponseFactory.LoginSuccess(token));
     }
 }
 

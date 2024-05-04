@@ -1,3 +1,5 @@
+using DynamicAuth.Infrastructures.JWT;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var config = builder.Configuration;
@@ -9,7 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// EF
 builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(config.GetConnectionString("Auth")));
+
+// JWT
+builder.Services.AddJwtAuthentication(config);
 
 var app = builder.Build();
 
