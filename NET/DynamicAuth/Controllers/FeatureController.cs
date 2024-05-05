@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace DynamicAuth.Controllers;
+﻿namespace DynamicAuth.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-[Authorize]
+[Authorize(Policy = "Policy-Permission")]
 public class FeatureController : ControllerBase
 {
     [HttpGet]

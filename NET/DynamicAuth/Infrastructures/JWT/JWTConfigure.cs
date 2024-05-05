@@ -42,6 +42,5 @@ public static class JWTConfigure
             });
 
         services.AddSingleton<JWTHelper>();
-        services.AddAuthorization();
     }
 }

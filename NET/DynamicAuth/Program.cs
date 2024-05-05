@@ -16,7 +16,11 @@ builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(confi
 // JWT
 builder.Services.AddJwtAuthentication(config);
 
+// Policy
+builder.Services.AddPolicy();
+
 builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
