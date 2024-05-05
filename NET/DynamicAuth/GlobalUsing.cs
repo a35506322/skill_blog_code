@@ -7,4 +7,3 @@ global using Microsoft.EntityFrameworkCore;
 global using DynamicAuth.Infrastructures.JWT;
 global using Microsoft.AspNetCore.Authorization;
 global using DynamicAuth.Infrastructures.Swagger;
-global using DynamicAuth.Infrastructures.AuthPolicy;

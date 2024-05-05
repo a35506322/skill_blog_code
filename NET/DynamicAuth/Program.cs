@@ -1,3 +1,5 @@
+using DynamicAuth.Infrastructures.Security;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var config = builder.Configuration;

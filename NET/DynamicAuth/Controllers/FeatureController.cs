@@ -3,6 +3,7 @@
 [Route("api/[controller]/[action]")]
 [ApiController]
 [Authorize(Policy = "Policy-Permission")]
+// [Authorize]
 public class FeatureController : ControllerBase
 {
     [HttpGet]
