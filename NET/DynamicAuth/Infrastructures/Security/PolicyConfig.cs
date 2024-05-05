@@ -9,8 +9,9 @@ public static class PolicyConfig
         //    options.AddPolicy("Policy-Permission", policy =>
         //        policy.Requirements.Add(new PermissionAuthorizationRequirement()));
         //});
-        services.AddScoped<IPermissionAuthorizationProvider, PermissionAuthorizationProvider>();
+        services.AddSingleton<PermissionCache>();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        services.AddSingleton<IPermissionAuthorizationProvider, PermissionAuthorizationProvider>();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         services.AddSingleton<IAuthorizationMiddlewareResultHandler, PermissionAuthorizationMiddlewareResultHandler>();
     }

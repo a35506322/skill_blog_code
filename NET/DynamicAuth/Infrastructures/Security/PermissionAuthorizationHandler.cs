@@ -7,10 +7,10 @@ namespace DynamicAuth.Infrastructures.Security;
 /// </summary>
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement>
 {
-    private readonly IServiceProvider _servicesProvider;
-    public PermissionAuthorizationHandler(IServiceProvider servicesProvider)
+    private IPermissionAuthorizationProvider _permissionAuthorizationProvider;
+    public PermissionAuthorizationHandler(IPermissionAuthorizationProvider permissionAuthorizationProvider)
     {
-        _servicesProvider = servicesProvider;
+        _permissionAuthorizationProvider = permissionAuthorizationProvider;
     }
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
@@ -27,9 +27,7 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
 
         // 取得 Token 中的 UserId
         var userId = context.User.Identity.Name;
-        using var scope = _servicesProvider.CreateScope();
-        var permissionAuthorizationProvider = scope.ServiceProvider.GetRequiredService<IPermissionAuthorizationProvider>();
-        var permissions = await permissionAuthorizationProvider.GetAuthorizationPolicy(userId);
+        var permissions = await _permissionAuthorizationProvider.GetAuthorizationPolicy(userId);
 
         // 比對該User的EnpointId是否與ActionName相同
         // https://stackoverflow.com/questions/47809437/how-to-access-current-httpcontext-in-asp-net-core-2-custom-policy-based-authoriz
