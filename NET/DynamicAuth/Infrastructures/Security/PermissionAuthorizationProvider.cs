@@ -19,6 +19,7 @@ public class PermissionAuthorizationProvider : IPermissionAuthorizationProvider
 
     public async Task<IEnumerable<Role_Endpoint>> GetAuthorizationPolicy(string userId)
     {
+        Console.WriteLine($"PermissionAuthorizationProvider => GetAuthorizationPolicy  UserId: '{userId}'");
         if (!_permissionCache.Cache.TryGetValue(userRoleCacheKey, out List<User_Role> cacheResultForUserRoles))
         {
             using var scope = _serviceProvider.CreateScope();

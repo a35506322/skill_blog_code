@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace DynamicAuth.Infrastructures.Security;
 
@@ -16,15 +17,17 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
         PermissionAuthorizationRequirement requirement)
     {
-        Console.WriteLine($"2. PermissionAuthorizationHandler 處理政策為: {requirement.PolicyName}");
+        Console.WriteLine($"PermissionAuthorizationHandler => 處理政策為: '{requirement.PolicyName}'");
 
         // 判斷是否有通過Token驗證
         if (context.User.Identity.IsAuthenticated == false)
         {
+            Console.WriteLine($"PermissionAuthorizationHandler => 目前請求沒有通過Token驗證");
             context.Fail(new AuthorizationFailureReason(this, $"目前請求沒有通過Token驗證"));
             return;
         }
 
+        Console.WriteLine($"PermissionAuthorizationHandler => UserId: '{context.User.Identity.Name}'");
         // 取得 Token 中的 UserId
         var userId = context.User.Identity.Name;
         var permissions = await _permissionAuthorizationProvider.GetAuthorizationPolicy(userId);
@@ -39,12 +42,14 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             var permission = permissions.SingleOrDefault(x => x.EndpointId == actionDescriptor.ActionName);
             if (permission is null)
             {
+                Console.WriteLine($"PermissionAuthorizationHandler => 用戶 '{userId}'，沒有授權 '{requirement.PolicyName}'，沒有此'{actionDescriptor.ActionName}'權限");
                 context.Fail(new AuthorizationFailureReason(this, $"用戶 '{userId}'，沒有授權 '{requirement.PolicyName}'，沒有此'{actionDescriptor.ActionName}'權限"));
             }
         }
 
         if (context.HasFailed == false)
         {
+            Console.WriteLine($"PermissionAuthorizationHandler => 用戶 '{userId}'，有授權 '{requirement.PolicyName}'");
             context.Succeed(requirement);
         }
     }

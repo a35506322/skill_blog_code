@@ -21,7 +21,7 @@ public class PermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvide
 
     public async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
     {
-        Console.WriteLine($"1. PermissionAuthorizationPolicyProvider 註冊政策: {policyName}");
+        Console.WriteLine($"\r\nPermissionAuthorizationPolicyProvider 註冊政策: '{policyName}'");
         if (policyName.StartsWith("Policy", StringComparison.OrdinalIgnoreCase))
         {
             var policy = new AuthorizationPolicyBuilder();
