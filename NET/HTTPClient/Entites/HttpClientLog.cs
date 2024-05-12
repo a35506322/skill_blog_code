@@ -28,4 +28,6 @@ public partial class HttpClientLog
     public string ResponseHeaders { get; set; }
 
     public string ResponseBody { get; set; }
+
+    public DateTime Time { get; set; }
 }

@@ -87,7 +87,7 @@ public class HttpClientLoggingHandler : DelegatingHandler
         // save db
         HttpClientLog httpClientLog = new HttpClientLog()
         {
-            FromRequestUri = this._httpContextAccessor.HttpContext.Request.Host.ToString(),
+            FromRequestUri = $"{this._httpContextAccessor.HttpContext.Request.Scheme.ToString()}://{this._httpContextAccessor.HttpContext.Request.Host.ToString()}",
             HttpMethod = request.Method.ToString(),
             Query = request.RequestUri?.Query,
             ReuqestUri = request.RequestUri!.ToString(),
@@ -97,6 +97,7 @@ public class HttpClientLoggingHandler : DelegatingHandler
             ResponseStatus = ((int)response.StatusCode).ToString(),
             ResponseHeaders = repHeaders,
             ResponseBody = jsonText,
+            Time = DateTime.Now
         };
 
         await this._todoContext.HttpClientLog.AddAsync(httpClientLog);
