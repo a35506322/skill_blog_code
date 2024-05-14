@@ -1,5 +1,6 @@
 ﻿using HTTPClient.Entites;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -87,7 +88,7 @@ public class HttpClientLoggingHandler : DelegatingHandler
         // save db
         HttpClientLog httpClientLog = new HttpClientLog()
         {
-            FromRequestUri = $"{this._httpContextAccessor.HttpContext.Request.Scheme.ToString()}://{this._httpContextAccessor.HttpContext.Request.Host.ToString()}",
+            FromRequestUri = this._httpContextAccessor.HttpContext.Request.GetDisplayUrl(),
             HttpMethod = request.Method.ToString(),
             Query = request.RequestUri?.Query,
             ReuqestUri = request.RequestUri!.ToString(),
