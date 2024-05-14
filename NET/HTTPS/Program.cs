@@ -20,7 +20,7 @@ var app = builder.Build();
 // 利用 pipeline 觀察 request 以及 response
 app.Use(async (context, next) =>
 {
-    Console.WriteLine($"request-  request url : {context.Response.HttpContext.Request.GetDisplayUrl()}");
+    Console.WriteLine($"request-  request url : {context.Request.GetDisplayUrl()}");
     await next.Invoke();
     Console.WriteLine($"response- response location : {context.Response.Headers.Location} | status code {context.Response.StatusCode}");
 });
