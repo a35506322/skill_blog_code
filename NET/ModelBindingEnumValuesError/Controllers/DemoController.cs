@@ -10,7 +10,7 @@ public class DemoController : ControllerBase
 {
 
     [HttpPost]
-    public IActionResult DemoPostErrror([FromBody] DemoEnum demoEnum)
+    public IActionResult DemoPostError([FromBody] DemoEnum demoEnum)
     {
         return Ok(demoEnum);
     }
