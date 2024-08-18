@@ -1,0 +1,6 @@
+@ModelValidErrMsgFormat_HostAddress = http://localhost:5101
+
+GET {{ModelValidErrMsgFormat_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

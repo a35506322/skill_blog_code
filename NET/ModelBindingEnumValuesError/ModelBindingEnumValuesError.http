@@ -1,0 +1,6 @@
+@ModelBindingEnumValuesError_HostAddress = http://localhost:5083
+
+GET {{ModelBindingEnumValuesError_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
