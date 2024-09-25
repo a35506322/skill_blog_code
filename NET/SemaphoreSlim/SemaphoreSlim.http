@@ -1,0 +1,6 @@
+@SemaphoreSlim_HostAddress = http://localhost:5103
+
+GET {{SemaphoreSlim_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
